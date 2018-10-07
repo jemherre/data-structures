@@ -9,7 +9,6 @@ var Queue = function() {
   someInstance.enqueue = function(value) {
     storage[size] = value;
     size++;
-    console.log("IN >> ",JSON.stringify(storage),size);
   };
 
   someInstance.dequeue = function() {
