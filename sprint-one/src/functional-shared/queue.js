@@ -4,7 +4,7 @@ var Queue = function() {
   var someInstance = {};
 
   someInstance.storage = {};
-  someInstance.qSize = 0;
+  someInstance.qticket = 0;
   someInstance.first = 0; //always going to be zero
   someInstance.last = 0;
 
@@ -16,56 +16,50 @@ var Queue = function() {
 Queue.queueMethods = {};
 
 Queue.queueMethods.enqueue = function(value){
-  console.log("ENQ>> ",this.first,this.last,this.qSize);
-  if(this.qSize == 0 ) {//initialize
-    this.storage[this.first] = value;
-    this.last = this.first;
-    this.qSize++;
-    console.log("INIT ",this.first,this.last,this.qSize);
+  if(this.qticket == 0 ) {//initialize
+    this.storage[this.first] = value;//both end/first point to same place
   }
   else {
-    this.storage[this.qSize] = value;
-    this.last = this.qSize;
-    this.qSize++;
-    console.log("ADD ",this.first,this.last,this.qSize);
+    this.storage[this.qticket] = value;
+    this.last = this.qticket;//update endpoint
   }
+  this.qticket++;
 };
 
 Queue.queueMethods.dequeue = function(){
-  console.log("DQ>> ",this.first,this.last,this.qSize);
-  if (this.last === 0) return; //when empty don't dequeue
-  var value = this.first; //store first val
+  if (this.qticket < 1) return; //when empty don't dequeue
+  var value = this.storage[this.first]; //store first val
   this.storage[this.first] = undefined; //clear first elem
   if (this.last != this.first) { //if end != first
     for(var key in this.storage){//only do once
-      this.storage[this.first] = this.storage[key];//update first, key is next elem after first
-      this.storage[key] = undefined;//clear original
-      break;
+     if(key != '0'){
+        this.storage[this.first] = this.storage[key];//update first, key is next elem after first
+        this.storage[key] = undefined;//clear original
+        if(this.storage[this.last] === undefined)//check end point and update
+          this.last = this.first;
+        break;
+     }
     }
   } else { //if end == first; then reset everything
-    this.qSize = 0;
-    this.first= 0;
-    this.last = 0;
+    this.qticket = 0;
   }
-  //console.log()
   return value;
 };
 
 Queue.queueMethods.size = function(){
-  console.log("SIZE>> ",this.first,this.last,this.qSize);
-  if (this.qSize < 1) return 0;
-  var length = 1;
-  console.log(length,JSON.stringify(this.storage));
-  for(var key in this.storage){
-    console.log(key);
-    if(key !== '0'){//skip first elem
-      console.log(Number(key),this.last);
-      length += this.last - Number(key);
-      console.log(length);
-      break;//only do once
+  if (this.qticket < 1) return 0;
+  if(this.last != this.first){
+    var length = 2;//least num size
+    for(var key in this.storage){
+      if(key !== '0'){//skip first elem
+        length += this.last - Number(key);
+        break;//only do once
+      }
     }
+    return length;
   }
-  return length;
+  return 1;
+
 };
 
 
