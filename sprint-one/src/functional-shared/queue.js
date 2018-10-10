@@ -1,21 +1,21 @@
 var Queue = function() {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
-  var someInstance = {};
+  var someInstance = {
+    storage : {},
+    qticket : 0,
+    first : 0, //always going to be zero
+    last : 0
+  };
 
-  someInstance.storage = {};
-  someInstance.qticket = 0;
-  someInstance.first = 0; //always going to be zero
-  someInstance.last = 0;
-
-  _.extend(someInstance, Queue.queueMethods);
+  _.extend(someInstance, queueMethods);
 
   return someInstance;
 };
 
-Queue.queueMethods = {};
+var queueMethods = {};
 
-Queue.queueMethods.enqueue = function(value){
+queueMethods.enqueue = function(value){
   if(this.qticket == 0 ) {//initialize
     this.storage[this.first] = value;//both end/first point to same place
   }
@@ -26,7 +26,7 @@ Queue.queueMethods.enqueue = function(value){
   this.qticket++;
 };
 
-Queue.queueMethods.dequeue = function(){
+queueMethods.dequeue = function(){
   if (this.qticket < 1) return; //when empty don't dequeue
   var value = this.storage[this.first]; //store first val
   this.storage[this.first] = undefined; //clear first elem
@@ -46,7 +46,7 @@ Queue.queueMethods.dequeue = function(){
   return value;
 };
 
-Queue.queueMethods.size = function(){
+queueMethods.size = function(){
   if (this.qticket < 1) return 0;
   if(this.last != this.first){
     var length = 2;//least num size
@@ -59,7 +59,6 @@ Queue.queueMethods.size = function(){
     return length;
   }
   return 1;
-
 };
 
 

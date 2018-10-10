@@ -6,7 +6,7 @@ var Stack = function() {
   someInstance.storage = {};
   someInstance.objSize = 0;
 
-  _.extend(someInstance,Stack.stackMethods);
+  _.extend(someInstance,stackMethods);
 
   return someInstance;
 };
@@ -18,7 +18,7 @@ var Stack = function() {
 // };
 
 
-Stack.stackMethods = {
+var stackMethods = {
   push: function(value){
     this.storage[this.objSize] = value;
     this.objSize++;
