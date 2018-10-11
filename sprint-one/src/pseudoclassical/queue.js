@@ -38,7 +38,7 @@ Queue.prototype.size = function(){
   if(this.count === 0) return 0; //size 0
   if(this.end === this.begin) return 1;//size 1
   var length = 2;
-  console.log(length,this.end);
+  //console.log(length,this.end);
   for(var key in this.storage){
     if(key != '0'){//only do once
       length += this.end - Number(key);
