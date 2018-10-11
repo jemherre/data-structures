@@ -26,7 +26,7 @@ Queue.prototype.dequeue =function(){
       if(key != '0'){//only do once
         if(this.end == Number(key)) this.end = this.begin;//update end whenit points to begin
         this.storage[this.begin] = this.storage[key];//update begin pointer
-        this.storage[key] = undefined;//clear elem
+        this.storage[key] = undefined;
         break;
       }
     }
