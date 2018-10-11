@@ -18,7 +18,7 @@ stackMethods.push = function(value){
 stackMethods.pop = function(){
   if(this.objSize == 0) return;
   var value = this.storage[this.objSize - 1];
-  this.storage[this.objSize - 1] = undefined;
+  this.storage[this.objSize - 1] = undefined;//clear <key,val>
   this.objSize--;
   return value;
 };

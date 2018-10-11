@@ -32,7 +32,7 @@ queueMethods.dequeue = function(){
         //if end points to this index
         if(this.end == Number(key) ) this.end = this.first;//adjust end pointer
         this.storage[this.first] = this.storage[key];//update first pointer
-        this.storage[key] = undefined;
+        this.storage[key] = undefined;//clear
         break;
       }
     }
