@@ -3,21 +3,25 @@
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  this.ratio = 0;
+  this.totalTupples = 0;
 };
 
 
 
 HashTable.prototype.insert = function(k, v) {
+  //calculate ratio first
   var index = getIndexBelowMaxForKey(k, this._limit);
+
   //check the index first to see if its undefined,
   var tupple = [k,v];
   var bucket = this._storage.get(index);
   if(bucket === undefined){//check for bucket
     bucket = [];
+    this.totalTupples = this.totalTupples + 1;//update
     bucket.push(tupple);
     this._storage.set(index, bucket) //create the bucket
   } else {
+    //increment tupple
     var findTupple = false;
     //console.log("Bucket: ", bucket)
     for(var i = 0; i < bucket.length; i++){
@@ -29,10 +33,12 @@ HashTable.prototype.insert = function(k, v) {
     if(!findTupple){
       //console.log(typeof this._storage[index])
       bucket.push(tupple);
+      this.totalTupples = this.totalTupples + 1;//update
       this._storage.set(index, bucket)
     }
 
   }
+  console.log(k,this.totalTupples)
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -56,14 +62,13 @@ HashTable.prototype.remove = function(k) {
     for( var i = 0; i < bucket.length; i++){
       //check each tuple at index 0 to check for key -- [key, index]
       if(bucket[i][0] === k){
+        this.totalTupples = this.totalTupples - 1;//update
         bucket[i][1] = undefined; //set tuple to be undefined
       }
     }
   }
-
+  console.log(this.totalTupples);
 };
-
-
 
 /*
  * Complexity: What is the time complexity of the above functions?

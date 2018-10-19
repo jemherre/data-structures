@@ -44,7 +44,8 @@ BinarySearchTree.prototype.contains = function(val){
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(fn){
-  fn.call(null,this.value);
+  //fn.call(null,this.value);
+  fn(this.value)
   //if both are null,
   if(this.left === null && this.right === null) {
     return;
@@ -67,7 +68,7 @@ depthFirstLog() -- n -- linear
 
       5
       /\
-     2  null
+     2   8
      /\   /\
     n  3 6  7
      / \

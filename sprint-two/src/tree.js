@@ -1,18 +1,24 @@
 var Tree = function(value) {
   var newTree = {};
   newTree.value = value;
+  /*   advanced */
+  newTree.parent = null; //root node
+  /*     *      */
   // your code here
-  newTree.children = [];  // fix me
+  newTree.children = [];
   _.extend(newTree, treeMethods);
   return newTree;
 };
 
 var treeMethods = {};
 
+
 treeMethods.addChild = function(value) {
-  //create new Tree
-  //push the new Tree into this.children
-  this.children.push(new Tree(value));
+
+  var treeNode = Tree(value);
+  treeNode.parent = this; //you wantt to point to the parent's node
+  this.children.push(treeNode);
+
 };
 
 treeMethods.contains = function(target) {
@@ -35,10 +41,39 @@ treeMethods.contains = function(target) {
   return false; //if it did not return true
 };
 
-
-
 /*
  * Complexity: What is the time complexity of the above functions?
  * addchild() --> constant time
  * contains() --> linear time
  */
+
+ //        5     --> this
+//      3  4 ---> new instance of tree node
+//        7  9
+
+ /*     *     *     *     A D V A N C E D    C O N T E N T   *     *     *     *      */
+ treeMethods.removeFromParent = function(){
+   //helper function to find node's index in parent array
+  var findIndex = function(node){
+    for(var i = 0; i < node.parent.children.length; i++){
+      if(node.parent.children[i].value === node.value) return i;
+    }
+    return -1; //did not find
+  };
+
+  var index = findIndex(this);
+  if (index === -1) return; //if it did not find the index then exit function
+
+  this.parent.children.splice(index,1);
+ };
+
+
+ treeMethods.traverse = function(fn){
+   //iterate through all the children
+    for(var i = 0; i < this.children.length; i++){
+      fn(this.children[i].value);
+      if(this.children[i].children.length > 0 ){
+        this.children[i].traverse(fn);
+      }
+    }
+};
