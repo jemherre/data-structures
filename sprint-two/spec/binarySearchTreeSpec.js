@@ -2,7 +2,7 @@ describe('binarySearchTree', function() {
   var binarySearchTree;
 
   beforeEach(function() {
-    binarySearchTree = BinarySearchTree(5);
+    binarySearchTree = new BinarySearchTree(5);
   });
 
   it('should have methods named "insert", "contains", and "depthFirstLog', function() {
@@ -37,4 +37,20 @@ describe('binarySearchTree', function() {
     binarySearchTree.depthFirstLog(func);
     expect(array).to.eql([5, 2, 3, 7]);
   });
+
+   /*    *     *    A D V A N C E D    C O N T E N T    *     *      */
+
+  it('ADVANCED TEST: should have methods named "breadthFirstLog"', function() {
+    expect(binarySearchTree.breadthFirstLog).to.be.a('function');
+  });
+
+   // Make your binarySearchTree rebalance as soon as the max depth is more than twice the minimum depth ??
+
+  it('ADVANCED TEST: should execute a callback on every value in a tree using "breadthFirstLog"', function() {
+
+  });
+
+
+
+
 });
